@@ -1,16 +1,8 @@
 from fastapi import FastAPI
-from app.api.router import api_router
+from app.routes.wallet_routes import router
 
 app = FastAPI(
-    title="AI Crypto Testnet Platform",
-    version="1.0.0"
+    title="AI Crypto Testnet Platform"
 )
 
-app.include_router(api_router)
-
-@app.get("/")
-def home():
-    return {
-        "status": "success",
-        "message": "AI Crypto Testnet Platform Running"
-    }
+app.include_router(router)
