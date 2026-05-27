@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routes.wallet_routes import router
+from app.routes.user_routes import router
 
 app = FastAPI(
     title="AI Crypto Testnet Platform"
