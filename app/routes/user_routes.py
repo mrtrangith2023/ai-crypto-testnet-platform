@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-from app.schemas.wallet_schema import UserCreate
+from fastapi import APIRouter, HTTPException
+from app.schemas.user import UserCreate, UserResponse
 
 router = APIRouter()
 
@@ -9,7 +9,32 @@ users = []
 def get_users():
     return users
 
-@router.post("/users/")
+
+@router.post("/users/", response_model=UserResponse)
 def create_user(user: UserCreate):
-    users.append(user.dict())
-    return user
+
+    # Check duplicate email
+    for existing_user in users:
+        if existing_user["email"] == user.email:
+            raise HTTPException(
+                status_code=400,
+                detail="Email already exists"
+            )
+
+    # Check duplicate username
+    for existing_user in users:
+        if existing_user["username"] == user.username:
+            raise HTTPException(
+                status_code=400,
+                detail="Username already exists"
+            )
+
+    new_user = {
+        "id": len(users) + 1,
+        "username": user.username,
+        "email": user.email
+    }
+
+    users.append(new_user)
+
+    return new_user
