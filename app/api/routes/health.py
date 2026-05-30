@@ -1,4 +1,7 @@
 from fastapi import APIRouter
+# app/api/routes/health.py
+
+from app.core.config import SECRET_KEY
 
 router = APIRouter()
 
@@ -6,5 +9,5 @@ router = APIRouter()
 def health_check():
     return {
         "status": "success",
-        "message": "API is running"
+        "secret_loaded": bool(SECRET_KEY)
     }
