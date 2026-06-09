@@ -9,6 +9,12 @@ from app.routes.profile_routes import (
 )
 from app.api.routes.wallet import router as wallet_router
 
+from app.models.project import Project
+
+from app.api.routes.project import (
+    router as project_router
+)
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -20,3 +26,4 @@ app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(profile_router)
 app.include_router(wallet_router)
+app.include_router(project_router)
