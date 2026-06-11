@@ -36,3 +36,28 @@ def get_projects(
     return db.query(
         Project
     ).all()
+
+def search_projects(
+    db,
+    name=None,
+    ecosystem=None,
+    status=None
+):
+    query = db.query(Project)
+
+    if name:
+        query = query.filter(
+            Project.name.contains(name)
+        )
+
+    if ecosystem:
+        query = query.filter(
+            Project.ecosystem == ecosystem
+        )
+
+    if status:
+        query = query.filter(
+            Project.status == status
+        )
+
+    return query.all()
