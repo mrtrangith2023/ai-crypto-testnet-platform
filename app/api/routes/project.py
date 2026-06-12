@@ -16,7 +16,9 @@ from app.schemas.project import (
 from app.services.project_service import (
     create_project,
     get_projects,
-    search_projects
+    search_projects,
+    get_project_by_id,
+    get_project_stats
 )
 from fastapi import Query
 
@@ -76,4 +78,33 @@ def search_project(
         name,
         ecosystem,
         status
+    )
+
+@router.get(
+    "/{project_id}",
+    response_model=ProjectResponse
+)
+def project_detail(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(
+        get_current_user
+    )
+):
+    return get_project_by_id(
+        db,
+        project_id
+    )
+
+@router.get(
+    "/stats/overview"
+)
+def stats(
+    db: Session = Depends(get_db),
+    current_user=Depends(
+        get_current_user
+    )
+):
+    return get_project_stats(
+        db
     )

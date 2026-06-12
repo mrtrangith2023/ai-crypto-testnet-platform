@@ -61,3 +61,43 @@ def search_projects(
         )
 
     return query.all()
+
+def get_project_by_id(
+    db,
+    project_id: int
+):
+    return db.query(
+        Project
+    ).filter(
+        Project.id == project_id
+    ).first()
+
+def get_project_stats(db):
+
+    projects = db.query(
+        Project
+    ).all()
+
+    total = len(projects)
+
+    testnet = len([
+        p for p in projects
+        if p.status == "Testnet"
+    ])
+
+    mainnet = len([
+        p for p in projects
+        if p.status == "Mainnet"
+    ])
+
+    ethereum = len([
+        p for p in projects
+        if p.ecosystem == "Ethereum"
+    ])
+
+    return {
+        "total_projects": total,
+        "testnet_projects": testnet,
+        "mainnet_projects": mainnet,
+        "ethereum_projects": ethereum
+    }
