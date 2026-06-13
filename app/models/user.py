@@ -26,4 +26,9 @@ class User(Base):
         back_populates="owner"
     )
 
+    portfolios = relationship(
+    "Portfolio",
+    back_populates="owner"
+)
+
 from app.models.wallet import Wallet
