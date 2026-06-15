@@ -26,6 +26,10 @@ from app.api.routes.portfolio import (
 from app.models.portfolio_project import (
     PortfolioProject
 )
+from app.models.project_note import ProjectNote
+from app.api.routes.project_note import (
+    router as project_note_router
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -41,3 +45,4 @@ app.include_router(wallet_router)
 app.include_router(project_router)
 app.include_router(watchlist_router)
 app.include_router(portfolio_router)
+app.include_router(project_note_router)
