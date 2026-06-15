@@ -30,6 +30,11 @@ from app.models.project_note import ProjectNote
 from app.api.routes.project_note import (
     router as project_note_router
 )
+from app.models.campaign import Campaign
+from app.models.campaign_task import CampaignTask
+from app.api.routes.campaign import (
+    router as campaign_router
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -46,3 +51,4 @@ app.include_router(project_router)
 app.include_router(watchlist_router)
 app.include_router(portfolio_router)
 app.include_router(project_note_router)
+app.include_router(campaign_router)
