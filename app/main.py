@@ -35,6 +35,7 @@ from app.models.campaign_task import CampaignTask
 from app.api.routes.campaign import (
     router as campaign_router
 )
+from app.models.user_task import UserTask
 
 Base.metadata.create_all(bind=engine)
 

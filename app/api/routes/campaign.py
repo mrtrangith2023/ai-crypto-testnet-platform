@@ -4,6 +4,9 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.database.dependencies import get_db
+from app.auth.dependencies import (
+    get_current_user
+)
 
 from app.schemas.campaign import (
     CampaignCreate,
@@ -14,6 +17,13 @@ from app.schemas.campaign_task import (
     CampaignTaskCreate,
     CampaignTaskResponse
 )
+from app.schemas.user_task import (
+    UserTaskResponse
+)
+
+from app.schemas.campaign_progress import (
+    CampaignProgressResponse
+)
 
 from app.services.campaign_service import (
     create_campaign,
@@ -23,6 +33,10 @@ from app.services.campaign_service import (
 from app.services.campaign_task_service import (
     create_task,
     get_tasks
+)
+from app.services.user_task_service import (
+    complete_task,
+    get_campaign_progress
 )
 
 router = APIRouter(
@@ -82,4 +96,40 @@ def list_tasks(
     return get_tasks(
         db,
         campaign_id
+    )
+
+@router.post(
+    "/tasks/{task_id}/complete",
+    response_model=UserTaskResponse
+)
+def complete_campaign_task(
+    task_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(
+        get_current_user
+    )
+):
+
+    return complete_task(
+        db,
+        int(current_user["sub"]),
+        task_id
+    )
+
+@router.get(
+    "/{campaign_id}/progress",
+    response_model=CampaignProgressResponse
+)
+def campaign_progress(
+    campaign_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(
+        get_current_user
+    )
+):
+
+    return get_campaign_progress(
+        db,
+        campaign_id,
+        int(current_user["sub"])
     )
