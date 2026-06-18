@@ -36,6 +36,11 @@ from app.api.routes.campaign import (
     router as campaign_router
 )
 from app.models.user_task import UserTask
+from app.models.reward import Reward
+from app.models.user_reward import UserReward
+from app.api.routes.reward import (
+    router as reward_router
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -53,3 +58,4 @@ app.include_router(watchlist_router)
 app.include_router(portfolio_router)
 app.include_router(project_note_router)
 app.include_router(campaign_router)
+app.include_router(reward_router)
