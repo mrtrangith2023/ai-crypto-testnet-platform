@@ -1,21 +1,16 @@
 from fastapi import FastAPI
-
 from app.database.database import engine, Base
-
 from app.routes.user_routes import router as user_router
 from app.routes.auth_routes import router as auth_router
 from app.routes.profile_routes import (
     router as profile_router
 )
 from app.api.routes.wallet import router as wallet_router
-
 from app.models.project import Project
 from app.models.portfolio import Portfolio
-
 from app.api.routes.project import (
     router as project_router
 )
-
 from app.models.watchlist import Watchlist
 from app.api.routes.watchlist import (
     router as watchlist_router
@@ -44,6 +39,7 @@ from app.api.routes.reward import (
 from app.api.routes.xp import (
     router as xp_router
 )
+from app.api.routes.badge import router as badge_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -63,3 +59,4 @@ app.include_router(project_note_router)
 app.include_router(campaign_router)
 app.include_router(reward_router)
 app.include_router(xp_router)
+app.include_router(badge_router)
